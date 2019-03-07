@@ -1,97 +1,77 @@
-/* eslint-disable no-unused-vars */
 import { spec } from '../modules/appnexusBidAdapter';
+import { getUniqueIdentifierStr, generateUUID, insertUserSyncIframe, triggerPixel, shuffleArray } from './utils';
 
-console.log('spec', spec);
-
-window.requestBid = function (videoAdUnit) {
-  console.log('videoAdUnit', videoAdUnit);
-  const bidRequests = getBidRequests();
-  const bidderRequest = getBidderRequest();
+window.requestBid = function (adUnit) {
+  const bidRequests = getBidRequests(adUnit);
+  const bidderRequest = getBidderRequest(bidRequests);
   const request = spec.buildRequests(bidRequests, bidderRequest);
-  console.log('request', request);
-  processRequest(request).then(response => {
+
+  return processRequest(request).then(response => {
     console.log('response', response);
+    if (response && response.error) {
+      throw new Error(response.error);
+    }
+
     const bids = spec.interpretResponse({ body: response }, { bidderRequest });
-    console.log('bids', bids);
+    if (bids && bids.length) {
+      setTimeout(triggerUserSync, 3000);
+      return bids[0].vastUrl;
+    }
+    return null;
   });
 }
 
 // generated bid requests
-function getBidRequests() {
-  return [
-    {
-      'bidder': 'appnexus',
-      'params': {
-        'placementId': '9333431',
-        'video': {
-          'skipppable': false,
-          'playback_methods': [
-            'auto_play_sound_off'
-          ]
-        }
-      },
-      'crumbs': {
-        'pubcid': 'c572e8b7-8252-44b3-a6ac-f85db2430455'
-      },
-      'mediaTypes': {
-        'video': {
-          'context': 'instream'
-        }
-      },
-      'adUnitCode': 'video1',
-      'transactionId': '5cb91f11-3181-4c87-81bf-0cfa6f23696a',
-      'sizes': [
-        640,
-        480
-      ],
-      'bidId': '2f307fc9cf206f',
-      'bidderRequestId': '125cfd48fefe06',
-      'auctionId': '5b41e1ea-8c7f-4ed0-b6f4-5530789cf58f'
-    }
-  ];
+function filterNonValid(bid) {
+  if (!spec.isBidRequestValid(bid)) {
+    return false;
+  }
+  return true;
 }
 
-function getBidderRequest() {
-  return {
-    'bidderCode': 'appnexus',
-    'auctionId': '5b41e1ea-8c7f-4ed0-b6f4-5530789cf58f',
-    'bidderRequestId': '125cfd48fefe06',
-    'bids': [
-      {
-        'bidder': 'appnexus',
-        'params': {
-          'placementId': '9333431',
-          'video': {
-            'skipppable': false,
-            'playback_methods': [
-              'auto_play_sound_off'
-            ]
-          }
-        },
-        'crumbs': {
-          'pubcid': 'c572e8b7-8252-44b3-a6ac-f85db2430455'
-        },
-        'mediaTypes': {
-          'video': {
-            'context': 'instream'
-          }
-        },
-        'adUnitCode': 'video1',
-        'transactionId': '5cb91f11-3181-4c87-81bf-0cfa6f23696a',
-        'sizes': [
-          640,
-          480
-        ],
-        'bidId': '2f307fc9cf206f',
-        'bidderRequestId': '125cfd48fefe06',
-        'auctionId': '5b41e1ea-8c7f-4ed0-b6f4-5530789cf58f'
-      }
+function getBidRequests(adUnit) {
+  const unitBid = adUnit.bids[0];
+  let bids = [
+    {
+      ...unitBid,
+      mediaTypes: adUnit.mediaTypes,
+      adUnitCode: adUnit.code,
+      sizes: adUnit.sizes,
+
+      bidderRequestId: getUniqueIdentifierStr(),
+      bidId: getUniqueIdentifierStr(),
+      transactionId: generateUUID(),
+      auctionId: generateUUID(),
+      crumbs: {
+        pubcid: generateUUID(),
+      },
+    }
+  ];
+  bids = bids.filter(filterNonValid);
+
+  return bids;
+}
+
+function getBidderRequest(bidRequests) {
+  if (!bidRequests || bidRequests.length == 0) {
+    return null;
+  }
+
+  const bid = bidRequests[0];
+  const bidderRequest = {
+    bidderCode: bid.bidder,
+    auctionId: bid.auctionId,
+    bidderRequestId: bid.bidderRequestId,
+    bids: [
+      bid,
     ],
-    'auctionStart': 1551439885900,
+    // 'auctionStart': 1551439885900,
     'timeout': 700,
-    'start': 1551439885902,
-    'doneCbCallCount': 0
+    'start': Date.now(),
+    // 'doneCbCallCount': 0
   };
+
+  return bidderRequest;
 }
 
 function processRequest(request) {
@@ -106,16 +86,23 @@ function processRequest(request) {
   });
 }
 
-//   pbjs.requestBids({
-//     timeout : 700,
-//     bidsBackHandler : function(bids) {
-//       var videoUrl = pbjs.adServers.dfp.buildVideoUrl({
-//         adUnit: videoAdUnit,
-//         params: {
-//           iu: '/19968336/prebid_cache_video_adunit'
-//         }
-//       });
+function triggerUserSync() {
+  if (!spec.getUserSyncs) {
+    return;
+  }
 
-//       invokeVideoPlayer(videoUrl);
-//     }
-//   });
+  let userSyncs = spec.getUserSyncs({
+    iframeEnabled: true,
+    pixelEnabled: true,
+  });
+
+  shuffleArray(userSyncs).forEach(({ type, url }) => {
+    console.log('user syncs', { type, url });
+    if (type == 'iframe') {
+      insertUserSyncIframe(url);
+    }
+    if (type == 'image') {
+      triggerPixel(url);
+    }
+  });
+}

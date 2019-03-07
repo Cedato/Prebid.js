@@ -6,7 +6,8 @@
   "scripts": {
     "test": "gulp test",
     "lint": "gulp lint",
-    "build:cedato": "webpack --watch --config webpack.conf.cedato.js"
+    "build:cedato": "webpack --watch --config webpack.conf.cedato.js",
+    "build:cedato-prod": "webpack -p --config webpack.conf.cedato.js"
   },
   "repository": {
     "type": "git",

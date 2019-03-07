@@ -7,6 +7,9 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
+    alias: {
+      '../src/adapters/bidderFactory': '../cedato/escape.js',
+    },
     modules: [
       path.resolve('.'),
       'node_modules'
@@ -41,6 +44,10 @@ module.exports = {
     ]
   },
   plugins: [
+    // new webpack.NormalModuleReplacementPlugin(
+    //   /some\/path\/config\.development\.js/,
+    //   './config.production.js'
+    // ),
     // new RequireEnsureWithoutJsonp(),
 
     // // this plugin must be last so it can be easily removed for karma unit tests

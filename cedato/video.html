@@ -29,81 +29,25 @@
 
     var videoAdUnit = {
       code: 'video1',
-      sizes: [640, 480],
       mediaTypes: {
-        video: { context: 'instream' }
+          video: {
+              playerSize: [640, 480],
+              context: 'instream'
+          }
       },
-      bids: [
-        {
+      bids: [{
           bidder: 'appnexus',
           params: {
-            placementId: 9333431,
-            video: {
-              skipppable: false,
-              playback_methods: ['auto_play_sound_off']
-            }
+              placementId: 13232361, // Add your own placement ID here
+              video: {
+                  skippable: true,
+                  playback_method: ['auto_play_sound_off']
+              }
           }
-        }, {
-          bidder: 'appnexus',
-          params: {
-            placementId: 13144370,
-            video: {
-              skipppable: false,
-              playback_methods: ['auto_play_sound_off']
-            }
-          }
-        }
-      ]
-    };
+      }]
+  };
 
     window.requestBid(videoAdUnit);
-
-      // pbjs.que.push(function(){
-      //   pbjs.addAdUnits(videoAdUnit);
-      //   pbjs.requestBids({
-      //     timeout : 700,
-      //     bidsBackHandler : function(bids) {
-      //       var videoUrl = pbjs.adServers.dfp.buildVideoUrl({
-      //         adUnit: videoAdUnit,
-      //         params: {
-      //           iu: '/19968336/prebid_cache_video_adunit'
-      //         }
-      //       });
-
-      //       invokeVideoPlayer(videoUrl);
-      //     }
-      //   });
-      // });
-
-      // pbjs.bidderSettings =
-      //   {
-      //     standard: {
-      //       adserverTargeting: [
-      //         {
-      //           key: "hb_bidder",
-      //           val: function (bidResponse) {
-      //             return bidResponse.bidderCode;
-      //           }
-      //         }, {
-      //           key: "hb_adid",
-      //           val: function (bidResponse) {
-      //             return bidResponse.adId;
-      //           }
-      //         }, {
-      //           key: "hb_pb",
-      //           val: function (bidResponse) {
-      //             return "10.00";
-      //           }
-      //         }, {
-      //           key: "hb_size",
-      //           val: function (bidResponse) {
-      //             return bidResponse.size;
-
-      //           }
-      //         }
-      //       ]
-      //     }
-      //   };
   </script>
 </head>
 
