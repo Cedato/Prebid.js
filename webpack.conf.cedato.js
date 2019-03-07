@@ -9,6 +9,8 @@ module.exports = {
   resolve: {
     alias: {
       '../src/adapters/bidderFactory': '../cedato/escape.js',
+      '../src/config': '../cedato/escape.js',
+      '../src/Renderer': '../cedato/escape.js',
     },
     modules: [
       path.resolve('.'),

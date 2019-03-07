@@ -1,20 +1,26 @@
 import { spec } from '../modules/appnexusBidAdapter';
 import { getUniqueIdentifierStr, generateUUID, insertUserSyncIframe, triggerPixel, shuffleArray } from './utils';
 
+const adapterUserSyncsDone = [];
+
 window.requestBid = function (adUnit) {
   const bidRequests = getBidRequests(adUnit);
   const bidderRequest = getBidderRequest(bidRequests);
   const request = spec.buildRequests(bidRequests, bidderRequest);
 
+  if (!adUnit.bids || adUnit.bids.length == 0) {
+    return null;
+  }
+
   return processRequest(request).then(response => {
-    console.log('response', response);
     if (response && response.error) {
       throw new Error(response.error);
     }
 
     const bids = spec.interpretResponse({ body: response }, { bidderRequest });
     if (bids && bids.length) {
-      setTimeout(triggerUserSync, 3000);
+      const bidder = adUnit.bids[0].bidder;
+      setTimeout(() => triggerUserSync(bidder), 3000);
       return bids[0].vastUrl;
     }
     return null;
@@ -86,8 +92,11 @@ function processRequest(request) {
   });
 }
 
-function triggerUserSync() {
+function triggerUserSync(bidder) {
   if (!spec.getUserSyncs) {
+    return;
+  }
+  if (adapterUserSyncsDone.indexOf(bidder) != -1) {
     return;
   }
 
@@ -97,7 +106,6 @@ function triggerUserSync() {
   });
 
   shuffleArray(userSyncs).forEach(({ type, url }) => {
-    console.log('user syncs', { type, url });
     if (type == 'iframe') {
       insertUserSyncIframe(url);
     }
@@ -105,4 +113,5 @@ function triggerUserSync() {
       triggerPixel(url);
     }
   });
+  adapterUserSyncsDone.push(bidder);
 }
