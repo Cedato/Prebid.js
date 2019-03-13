@@ -8,9 +8,9 @@ module.exports = {
   devtool: 'source-map',
   resolve: {
     alias: {
-      '../src/adapters/bidderFactory': '../cedato/escape.js',
-      '../src/config': '../cedato/escape.js',
-      '../src/Renderer': '../cedato/escape.js',
+      '../src/adapters/bidderFactory': '../cedato/bidderFactory.js',
+      '../src/config': '../cedato/config.js',
+      '../src/Renderer': '../cedato/Renderer.js',
     },
     modules: [
       path.resolve('.'),

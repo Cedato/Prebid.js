@@ -100,3 +100,12 @@ export function shuffleArray(list) {
   }
   return list;
 }
+
+export function parseQueryStringParameters(queryObj) {
+  let result = '';
+  for (var k in queryObj) {
+    if (queryObj.hasOwnProperty(k)) { result += k + '=' + encodeURIComponent(queryObj[k]) + '&'; }
+  }
+
+  return result;
+}

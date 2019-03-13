@@ -31,26 +31,31 @@
      */
 
     var videoAdUnit = {
-      code: 'video1',
-      sizes: [640, 480],
+      code: 'div-instream',
       mediaTypes: {
-        video: { context: 'instream' }
+        video: {
+          context: 'instream',
+          playerSize: [300, 250]
+        },
       },
-      bids: [
-        {
-          bidder: '33across',
-          params: {
-            siteId: 'examplePub1234',
-            productId: 'siab'
-          }
+      bids: [{
+        bidder: 'tremor',
+        params: {
+          supplyCode: 'ssp-demo-rm6rh',
+          adCode: 'ssp-!demo!-lufip',
+          videoId: 'MyCoolVideo'
         }
-      ]
+      }],
     };
 
     pbjs.que.push(function () {
       pbjs.addAdUnits(videoAdUnit);
+      pbjs.setConfig({
+        debug: true,
+      });
+
       pbjs.requestBids({
-        timeout: 700,
+        timeout: 1700,
         bidsBackHandler: function (bids) {
           var videoUrl = pbjs.adServers.dfp.buildVideoUrl({
             adUnit: videoAdUnit,
@@ -64,35 +69,35 @@
       });
     });
 
-    pbjs.bidderSettings =
-      {
-        standard: {
-          adserverTargeting: [
-            {
-              key: "hb_bidder",
-              val: function (bidResponse) {
-                return bidResponse.bidderCode;
-              }
-            }, {
-              key: "hb_adid",
-              val: function (bidResponse) {
-                return bidResponse.adId;
-              }
-            }, {
-              key: "hb_pb",
-              val: function (bidResponse) {
-                return "10.00";
-              }
-            }, {
-              key: "hb_size",
-              val: function (bidResponse) {
-                return bidResponse.size;
+    // pbjs.bidderSettings =
+    //   {
+    //     standard: {
+    //       adserverTargeting: [
+    //         {
+    //           key: "hb_bidder",
+    //           val: function (bidResponse) {
+    //             return bidResponse.bidderCode;
+    //           }
+    //         }, {
+    //           key: "hb_adid",
+    //           val: function (bidResponse) {
+    //             return bidResponse.adId;
+    //           }
+    //         }, {
+    //           key: "hb_pb",
+    //           val: function (bidResponse) {
+    //             return "10.00";
+    //           }
+    //         }, {
+    //           key: "hb_size",
+    //           val: function (bidResponse) {
+    //             return bidResponse.size;
 
-              }
-            }
-          ]
-        }
-      };
+    //           }
+    //         }
+    //       ]
+    //     }
+    //   };
   </script>
 </head>
 

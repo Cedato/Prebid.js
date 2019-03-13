@@ -22,32 +22,47 @@
 
 
   <script>
-    var pbjs = {
-      requestBids: { addHook: () => { } },
-      processQueue: () => { },
+    var bid = {
+        // {
+        //   bidder: 'appnexus',
+        //   params: {
+        //       placementId: 13232361, // Add your own placement ID here
+        //       video: {
+        //           skippable: true,
+        //           playback_method: ['auto_play_sound_off']
+        //       }
+        //   }
+        // },
+        // {
+        //   bidder: 'pubmatic',
+        //   params: {
+        //     publisherId: '156209',
+        //     adSlot: '1363568@300x250',
+        //     video: {
+        //       mimes: ['video/mp4','video/x-flv'],
+        //       skippable: true,
+        //     }
+        //   }
+        // },
+      // bidder: 'spotx',
+      // params: {
+      //   channel_id: 85394,
+      //   ad_unit: 'instream'
+      // }
+
+      // bidder: "freewheel-ssp",
+      // params: {
+      //   zoneId : '41852'
+      // }
+      bidder: 'tremor',
+      params: {
+        supplyCode: 'ssp-demo-rm6rh',
+        adCode: 'ssp-!demo!-lufip',
+        videoId: 'MyCoolVideo'
+      }
     };
 
-    var videoAdUnit = {
-      code: 'video1',
-      mediaTypes: {
-          video: {
-              playerSize: [640, 480],
-              context: 'instream'
-          }
-      },
-      bids: [{
-          bidder: 'appnexus',
-          params: {
-              placementId: 13232361, // Add your own placement ID here
-              video: {
-                  skippable: true,
-                  playback_method: ['auto_play_sound_off']
-              }
-          }
-      }]
-  };
-
-    window.requestBid(videoAdUnit);
+    window.requestBid(bid);
   </script>
 </head>
 
