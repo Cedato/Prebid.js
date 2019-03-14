@@ -42,11 +42,11 @@ window.requestBid = function (bid) {
     if (response && response.error) {
       throw new Error(response.error);
     }
-
-    const bids = spec.interpretResponse({ body: response }, request);
+    response = { body: response };
+    const bids = spec.interpretResponse(response, request);
     if (bids && bids.length) {
       const bidder = adUnit.bids[0].bidder;
-      setTimeout(() => triggerUserSync(bidder, spec), 3000);
+      setTimeout(() => triggerUserSync(bidder, [response], spec), 3000);
       return bids[0].vastUrl;
     }
     return null;
@@ -135,7 +135,7 @@ function processRequest(request) {
   });
 }
 
-function triggerUserSync(bidder, spec) {
+function triggerUserSync(bidder, responses, spec) {
   if (!spec.getUserSyncs) {
     return;
   }
@@ -146,7 +146,7 @@ function triggerUserSync(bidder, spec) {
   let userSyncs = spec.getUserSyncs({
     iframeEnabled: true,
     pixelEnabled: true,
-  });
+  }, responses);
 
   shuffleArray(userSyncs).forEach(({ type, url }) => {
     if (type == 'iframe') {
