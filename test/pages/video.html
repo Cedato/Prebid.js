@@ -39,11 +39,13 @@
         },
       },
       bids: [{
-        bidder: 'tremor',
+        bidder: 'pubmatic',
         params: {
-          supplyCode: 'ssp-demo-rm6rh',
-          adCode: 'ssp-!demo!-lufip',
-          videoId: 'MyCoolVideo'
+          publisherId: '32572',                     // required
+          adSlot: '38519891@300x250',              // required
+          video: {
+            mimes: ['video/mp4','video/x-flv'],   // required
+          }
         }
       }],
     };

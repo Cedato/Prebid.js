@@ -2,15 +2,15 @@ import '../modules/appnexusBidAdapter';
 import '../modules/pubmaticBidAdapter';
 // additional
 import '../modules/spotxBidAdapter';
-import '../modules/freewheel-sspBidAdapter';
-import '../modules/telariaBidAdapter';
+// import '../modules/freewheel-sspBidAdapter';
+// import '../modules/telariaBidAdapter';
 
 import { getUniqueIdentifierStr, generateUUID, insertUserSyncIframe, triggerPixel, shuffleArray, parseQueryStringParameters } from './utils';
 import { getAdapter } from './bidderFactory';
 
 const adapterUserSyncsDone = [];
 
-window.requestBid = function (bid) {
+export function requestBid(bid, config) {
   const spec = getAdapter(bid);
   if (!spec) {
     console.warn(`Unsupported bid adapter, name: ${bid && bid.bidder}`);
@@ -28,7 +28,7 @@ window.requestBid = function (bid) {
   };
 
   const bidRequests = getBidRequests(adUnit, spec);
-  const bidderRequest = getBidderRequest(bidRequests);
+  const bidderRequest = getBidderRequest(bidRequests, config);
   let request = spec.buildRequests(bidRequests, bidderRequest);
   if (Array.isArray(request)) {
     request = request[0];
@@ -84,11 +84,11 @@ function getBidRequests(adUnit, spec) {
   return bids;
 }
 
-function getBidderRequest(bidRequests) {
+function getBidderRequest(bidRequests, config) {
   if (!bidRequests || bidRequests.length == 0) {
     return null;
   }
-
+  const domain = (config && config.domain) || window.location.href;
   const bid = bidRequests[0];
   const bidderRequest = {
     bidderCode: bid.bidder,
@@ -101,10 +101,10 @@ function getBidderRequest(bidRequests) {
     timeout: 700,
     start: Date.now(),
     refererInfo: {
-      referer: window.location.href,
+      referer: domain,
       reachedTop: true,
       numIframes: 0,
-      stack: [window.location.href],
+      stack: [domain],
     },
   };
 

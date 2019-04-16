@@ -3,7 +3,7 @@ var helpers = require('./gulpHelpers');
 
 module.exports = {
   entry: {
-    'cedato-prebid': './cedato/prebid-cedato'
+    'bid-adapters': './cedato/bid-adapters'
   },
   devtool: 'source-map',
   resolve: {
