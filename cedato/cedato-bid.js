@@ -48,15 +48,16 @@ export function requestBid(bid, config) {
       const bidder = adUnit.bids[0].bidder;
       const currentBid = bids[0];
       setTimeout(() => triggerUserSync(bidder, [response], spec), 3000);
-      if (bid.floorPrice && currentBid.cpm < bid.floorPrice) {
-        return null;
-      }
+
       if (config && config.playerData) {
         config.playerData.impressionData = {
           pricing: currentBid.cpm,
           currency: currentBid.currency,
           impType: bidder,
         }
+      }
+      if (bid.floorPrice && currentBid.cpm < bid.floorPrice) {
+        throw new Error('bidder cmp is lower than floorPrice ' + bid.floorPrice);
       }
       return currentBid.vastUrl;
     }
