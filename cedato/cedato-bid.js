@@ -117,8 +117,12 @@ function getBidderRequest(bidRequests, config) {
       reachedTop: true,
       numIframes: 0,
       stack: [domain],
-    },
+    }
   };
+
+  if (config && config.gdprConsent) {
+    bidderRequest['gdprConsent'] = config.gdprConsent;
+  }
 
   return bidderRequest;
 }

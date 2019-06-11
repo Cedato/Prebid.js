@@ -24,14 +24,18 @@
   <script>
     var bid = {
         // {
-        //   bidder: 'appnexus',
-        //   params: {
-        //       placementId: 13232361, // Add your own placement ID here
-        //       video: {
-        //           skippable: true,
-        //           playback_method: ['auto_play_sound_off']
-        //       }
-        //   }
+          bidder: 'appnexus',
+          params: {
+              placementId: 13232361, // Add your own placement ID here
+              video: {
+                  skippable: true,
+                  playback_method: ['auto_play_sound_off']
+              }
+          },
+          gdpr: {
+            string: "some gdpr",
+            applies: false
+          }
         // },
         // {
         //   bidder: 'pubmatic',
@@ -54,15 +58,15 @@
       // params: {
       //   zoneId : '41852'
       // }
-      bidder: 'tremor',
-      params: {
-        supplyCode: 'ssp-demo-rm6rh',
-        adCode: 'ssp-!demo!-lufip',
-        videoId: 'MyCoolVideo'
-      }
+      // bidder: 'tremor',
+      // params: {
+      //   supplyCode: 'ssp-demo-rm6rh',
+      //   adCode: 'ssp-!demo!-lufip',
+      //   videoId: 'MyCoolVideo'
+      // }
     };
 
-    window.requestBid(bid);
+    window.CEDATO_BID.requestBid(bid);
   </script>
 </head>
 
