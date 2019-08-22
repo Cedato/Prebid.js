@@ -1,5 +1,6 @@
 var path = require('path');
 var helpers = require('./gulpHelpers');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -46,6 +47,14 @@ module.exports = {
     ]
   },
   plugins: [
+    new CopyPlugin([
+      {
+        from: 'dist/*',
+        to: '../../Javascript_Player/prebid/',
+        force: true,
+        flatten: true,
+      },
+    ]),
     // new webpack.NormalModuleReplacementPlugin(
     //   /some\/path\/config\.development\.js/,
     //   './config.production.js'
