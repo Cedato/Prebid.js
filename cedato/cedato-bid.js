@@ -2,6 +2,7 @@ import '../modules/appnexusBidAdapter';
 import '../modules/pubmaticBidAdapter';
 // additional
 import '../modules/spotxBidAdapter';
+import '../modules/lkqdBidAdapter';
 // import '../modules/freewheel-sspBidAdapter';
 // import '../modules/telariaBidAdapter';
 
@@ -59,7 +60,7 @@ export function requestBid(bid, config) {
       if (bid.floorPrice && currentBid.cpm < bid.floorPrice) {
         throw new Error('bidder cmp is lower than floorPrice ' + bid.floorPrice);
       }
-      return currentBid.vastUrl;
+      return currentBid.vastXml ? 'data:;base64,' + btoa(currentBid.vastXml) : currentBid.vastUrl;
     }
     return null;
   });
