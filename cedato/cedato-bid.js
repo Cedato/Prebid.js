@@ -52,9 +52,13 @@ export function requestBid(bid, config) {
 
       if (config && config.playerData) {
         config.playerData.impressionData = {
-          pricing: currentBid.cpm,
           currency: currentBid.currency,
           impType: bidder,
+        }
+
+        const pricing = +currentBid.cpm;
+        if (!isNaN(pricing)) {
+          config.playerData.impressionData.pricing = pricing;
         }
       }
       if (bid.floorPrice && currentBid.cpm < bid.floorPrice) {
