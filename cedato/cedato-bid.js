@@ -44,11 +44,13 @@ export function requestBid(bid, config) {
       throw new Error(response.error);
     }
     response = { body: response };
+
+    const bidder = adUnit.bids[0].bidder;
+    setTimeout(() => triggerUserSync(bidder, [response], spec, bidderRequest.gdprConsent), 3000);
+
     const bids = spec.interpretResponse(response, request);
     if (bids && bids.length) {
-      const bidder = adUnit.bids[0].bidder;
       const currentBid = bids[0];
-      setTimeout(() => triggerUserSync(bidder, [response], spec), 3000);
 
       if (config && config.playerData) {
         config.playerData.impressionData = {
@@ -156,7 +158,7 @@ function processRequest(request) {
   });
 }
 
-function triggerUserSync(bidder, responses, spec) {
+function triggerUserSync(bidder, responses, spec, gdprConsent) {
   if (!spec.getUserSyncs) {
     return;
   }
@@ -167,7 +169,7 @@ function triggerUserSync(bidder, responses, spec) {
   let userSyncs = spec.getUserSyncs({
     iframeEnabled: true,
     pixelEnabled: true,
-  }, responses);
+  }, responses, gdprConsent);
 
   shuffleArray(userSyncs).forEach(({ type, url }) => {
     if (type == 'iframe') {
