@@ -17,11 +17,14 @@ export function requestBid(bid, config) {
     console.warn(`Unsupported bid adapter, name: ${bid && bid.bidder}`);
     return;
   }
+
+  const width = config.width || 640;
+  const height = config.height || 480;
   const adUnit = {
-    sizes: [640, 480],
+    sizes: [width, height],
     mediaTypes: {
       video: {
-        playerSize: [640, 480],
+        playerSize: [width, height],
         context: 'instream',
       }
     },
@@ -138,10 +141,11 @@ function processRequest(request) {
   let requestUrl = request.url;
   const requestInit = {
     method: request.method,
-    mode: 'cors', // no-cors, cors, *same-origin
-    // headers: {
-    //   contentType: 'text/plain',
-    // },
+    mode: 'cors', // no-cors, cors, *same-origin,
+    credentials: 'include', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'text/plain',
+    },
   };
   if (request.data) {
     if (request.method == 'POST') {
