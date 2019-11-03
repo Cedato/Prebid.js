@@ -12,6 +12,7 @@ const CURRENCY = 'USD';
 const FIRST_PRICE = 1;
 const NET_REVENUE = true;
 const WINS = {};
+const START = +new Date();
 
 export const spec = {
   code: BIDDER_CODE,
@@ -39,6 +40,7 @@ export const spec = {
     const auctionId = bidderRequest.auctionId;
     const auctionStart = bidderRequest.auctionStart;
     const bidderRequestId = bidderRequest.bidderRequestId;
+    const time = (new Date() - START) / 1000;
 
     const imp = bidRequests.map(req => {
       const banner = getMediaType(req, 'banner');
@@ -73,7 +75,8 @@ export const spec = {
       tmax,
       auctionId,
       auctionStart,
-      bidderRequestId
+      bidderRequestId,
+      time
     };
 
     if (bidderRequest) {
