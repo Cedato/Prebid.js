@@ -11,6 +11,7 @@ const TTL = 10000;
 const CURRENCY = 'USD';
 const FIRST_PRICE = 1;
 const NET_REVENUE = true;
+const WINS = {};
 
 export const spec = {
   code: BIDDER_CODE,
@@ -35,6 +36,9 @@ export const spec = {
     const user = { id: getUserID() }
     const currency = CURRENCY;
     const tmax = bidderRequest.timeout;
+    const auctionId = bidderRequest.auctionId;
+    const auctionStart = bidderRequest.auctionStart;
+    const bidderRequestId = bidderRequest.bidderRequestId;
 
     const imp = bidRequests.map(req => {
       const banner = getMediaType(req, 'banner');
@@ -43,6 +47,8 @@ export const spec = {
       const bidId = req.bidId;
       const adUnitCode = req.adUnitCode;
       const bidRequestsCount = req.bidRequestsCount;
+      const bidRequestsWon = WINS[adUnitCode] || 0;
+      const transactionId = req.transactionId;
 
       return {
         bidId,
@@ -51,6 +57,8 @@ export const spec = {
         adUnitCode,
         bidfloor,
         bidRequestsCount,
+        bidRequestsWon,
+        transactionId
       };
     });
 
@@ -63,6 +71,9 @@ export const spec = {
       imp,
       currency,
       tmax,
+      auctionId,
+      auctionStart,
+      bidderRequestId
     };
 
     if (bidderRequest) {
@@ -108,6 +119,13 @@ export const spec = {
       syncs.push(getSync('image', gdprConsent));
     }
     return syncs;
+  },
+
+  onBidWon: function(bid) {
+    if (!WINS[bid.adUnitCode]) {
+      WINS[bid.adUnitCode] = 0;
+    }
+    WINS[bid.adUnitCode]++;
   }
 }
 
