@@ -85,6 +85,10 @@ function filterNonValid(bid, spec) {
 
 function getBidRequests(adUnit, spec) {
   const unitBid = adUnit.bids[0];
+  if (unitBid && unitBid.params && unitBid.params.schain) {
+    unitBid.schain = unitBid.params.schain;
+  }
+
   let bids = [
     {
       ...unitBid,
@@ -157,7 +161,7 @@ function processRequest(request) {
   return fetch(requestUrl, requestInit).then(response => response.text()).then(data => {
     try {
       data = JSON.parse(data);
-    } catch (e) {}
+    } catch (e) { }
     return data;
   });
 }

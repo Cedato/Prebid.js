@@ -836,6 +836,15 @@ export const spec = {
     payload.user.gender = (conf.gender ? conf.gender.trim() : UNDEFINED);
     payload.user.geo = {};
 
+    // adding schain object
+    if (validBidRequests[0].schain) {
+      payload.source = {
+        ext: {
+          schain: validBidRequests[0].schain
+        }
+      };
+    }
+
     // Attaching GDPR Consent Params
     if (bidderRequest && bidderRequest.gdprConsent) {
       payload.user.ext = {
