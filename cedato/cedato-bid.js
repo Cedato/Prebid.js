@@ -3,6 +3,7 @@ import '../modules/pubmaticBidAdapter';
 // additional
 import '../modules/spotxBidAdapter';
 import '../modules/lkqdBidAdapter';
+import '../modules/rhythmoneBidAdapter';
 // import '../modules/freewheel-sspBidAdapter';
 // import '../modules/telariaBidAdapter';
 
