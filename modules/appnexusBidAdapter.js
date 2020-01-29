@@ -126,6 +126,14 @@ export const spec = {
       schain: schain
     };
 
+    if (schain) {
+      payload.source = {
+        'ext': {
+          'schain': schain
+        }
+      }
+    }
+
     if (member > 0) {
       payload.member_id = member;
     }
