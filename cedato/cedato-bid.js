@@ -27,6 +27,16 @@ export function requestBid(bid, config) {
       video: {
         playerSize: [width, height],
         context: 'instream',
+        api: [1, 2],
+        mimes: [
+          'video/mp4',
+          'video/ogg',
+          'video/webm',
+          'application/javascript',
+        ],
+        protocols: [1, 2, 3, 4, 5, 6],
+        playbackmethod: [1, 2, 3],
+        linearity: 1,
       }
     },
     bids: [bid],
