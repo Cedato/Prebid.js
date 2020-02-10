@@ -22,6 +22,7 @@ export function requestBid(bid, config) {
   const width = config.width || 640;
   const height = config.height || 480;
   const adUnit = {
+    code: 'cedato-adapter',
     sizes: [width, height],
     mediaTypes: {
       video: {
