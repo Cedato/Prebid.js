@@ -1,6 +1,7 @@
  [
   "appnexusBidAdapter",
-
+  "pubmaticBidAdapter",
+  
   "consentManagement",
   "consentManagementUsp",
   "schain"
