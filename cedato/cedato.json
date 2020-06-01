@@ -9,6 +9,7 @@
   "rhythmoneBidAdapter",
   "sonobiBidAdapter",
   "spotxBidAdapter",
+  "synacormediaBidAdapter",
 
   "consentManagement",
   "consentManagementUsp",
