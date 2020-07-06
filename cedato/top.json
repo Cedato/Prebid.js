@@ -1,0 +1,19 @@
+ [
+  "appnexusBidAdapter",
+  "improvedigitalBidAdapter",
+  "ixBidAdapter",
+  "loopmeBidAdapter",
+  "oneVideoBidAdapter",
+  "onetagBidAdapter",
+  "openxBidAdapter",
+  "pubmaticBidAdapter",
+  "rhythmoneBidAdapter",
+  "rubiconBidAdapter",
+  "spotxBidAdapter",
+  "synacormediaBidAdapter",
+  "telariaBidAdapter",
+
+  "consentManagement",
+  "consentManagementUsp",
+  "schain"
+ ]
