@@ -9,6 +9,7 @@
   "pubmaticBidAdapter",
   "rhythmoneBidAdapter",
   "rubiconBidAdapter",
+  "smartadserverBidAdapter",
   "spotxBidAdapter",
   "synacormediaBidAdapter",
   "telariaBidAdapter",
