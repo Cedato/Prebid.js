@@ -1,6 +1,7 @@
  [
   "appnexusBidAdapter",
   "emx_digitalBidAdapter",
+  "gumgumBidAdapter",
   "improvedigitalBidAdapter",
   "ixBidAdapter",
   "oneVideoBidAdapter",
