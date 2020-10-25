@@ -1,5 +1,7 @@
  [
   "appnexusBidAdapter",
+  "oneVideoBidAdapter",
+  "openxBidAdapter",
   "pubmaticBidAdapter",
   
   "consentManagement",
