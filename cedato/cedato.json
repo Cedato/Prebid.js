@@ -1,4 +1,4 @@
- [
+[
   "appnexusBidAdapter",
   "emx_digitalBidAdapter",
   "gumgumBidAdapter",
@@ -8,11 +8,13 @@
   "openxBidAdapter",
   "pubmaticBidAdapter",
   "rhythmoneBidAdapter",
+  "rubiconBidAdapter",
   "sonobiBidAdapter",
   "spotxBidAdapter",
   "synacormediaBidAdapter",
-
+  "telariaBidAdapter",
+  
   "consentManagement",
   "consentManagementUsp",
   "schain"
- ]
+]

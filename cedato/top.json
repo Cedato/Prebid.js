@@ -1,10 +1,12 @@
- [
+[
+  "admanBidAdapter",
   "appnexusBidAdapter",
+  "freewheel-sspBidAdapter",
   "improvedigitalBidAdapter",
   "ixBidAdapter",
   "loopmeBidAdapter",
-  "oneVideoBidAdapter",
   "onetagBidAdapter",
+  "oneVideoBidAdapter",
   "openxBidAdapter",
   "pubmaticBidAdapter",
   "rhythmoneBidAdapter",
@@ -13,8 +15,7 @@
   "spotxBidAdapter",
   "synacormediaBidAdapter",
   "telariaBidAdapter",
-
   "consentManagement",
   "consentManagementUsp",
   "schain"
- ]
+]
