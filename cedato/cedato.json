@@ -1,9 +1,11 @@
 [
   "appnexusBidAdapter",
+  "conversantBidAdapter",
   "emx_digitalBidAdapter",
   "gumgumBidAdapter",
   "improvedigitalBidAdapter",
   "ixBidAdapter",
+  "krushmediaBidAdapter",
   "oneVideoBidAdapter",
   "openxBidAdapter",
   "pubmaticBidAdapter",
